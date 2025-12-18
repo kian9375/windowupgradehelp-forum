@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Fix MPM module conflict - disable event, enable prefork
+RUN a2dismod mpm_event && a2enmod mpm_prefork
+
 # Enable Apache modules
 RUN a2enmod rewrite headers
 
@@ -42,12 +45,11 @@ RUN chown -R www-data:www-data /var/www/html \
 
 # Configure Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-COPY apache.conf /etc/apache2/sites-available/000-default.conf
 
-# Use PORT environment variable from Railway
-ENV APACHE_PORT=80
-RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+# Create startup script to handle dynamic PORT
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
-EXPOSE ${PORT}
+EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["/start.sh"]
