@@ -11,6 +11,9 @@
     RewriteCond %{HTTP_HOST} ^www\.windowupgradehelp\.com$ [NC]
     RewriteRule ^ https://windowupgradehelp.com%{REQUEST_URI} [L,R=301]
 
+    # Allow purge_cache.php to execute directly (temporary)
+    RewriteRule ^purge_cache\.php$ - [L]
+
     # Remove index.php from URL
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
