@@ -7,6 +7,10 @@
     RewriteCond %{HTTP:X-Forwarded-Proto} =http
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+    # Redirect www to non-www (fixes Google duplicate canonical issue)
+    RewriteCond %{HTTP_HOST} ^www\.windowupgradehelp\.com$ [NC]
+    RewriteRule ^ https://windowupgradehelp.com%{REQUEST_URI} [L,R=301]
+
     # Remove index.php from URL
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
