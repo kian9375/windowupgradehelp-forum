@@ -1,5 +1,18 @@
 /* global phpbb */
 
+/* Google Analytics (GA4) + Google Ads */
+(function() {
+	var s = document.createElement('script');
+	s.async = true;
+	s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QFNTRMNS09';
+	document.head.appendChild(s);
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){window.dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-QFNTRMNS09');
+	gtag('config', 'AW-17782832258');
+})();
+
 /**
 * phpBB3 forum functions
 */
